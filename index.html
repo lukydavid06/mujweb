@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lukáš David – Finanční poradce</title>
+  <meta name="description" content="Individuální finanční strategie, pojištění, hypotéky, investice a správa nemovitostí v Praze. Nezávislý finanční poradce Lukáš David." />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+  <style>
+    :root {
+      --gold: #d4af37;
+      --navy: #1e293b;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Open Sans', sans-serif; color: var(--navy); overflow-x: hidden; margin: 0; }
+    h1,h2,h3,h4,h5 { font-family: 'Montserrat', sans-serif; }
+
+    .gold-btn {
+      background: var(--gold);
+      color: var(--navy);
+      font-weight: 700;
+      padding: 14px 32px;
+      border-radius: 4px;
+      border: none;
+      cursor: pointer;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 15px;
+      letter-spacing: 0.5px;
+      transition: all 0.25s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+    }
+    .gold-btn:hover { background: #c49b2a; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(212,175,55,0.35); }
+
+    .card {
+      background: white;
+      border-radius: 8px;
+      padding: 36px 28px;
+      box-shadow: 0 4px 24px rgba(30,41,59,0.08);
+      transition: all 0.3s;
+      border-top: 3px solid transparent;
+      height: 100%;
+    }
+    .card:hover { transform: translateY(-6px); box-shadow: 0 16px 40px rgba(30,41,59,0.14); border-top-color: var(--gold); }
+
+    .section-title { font-size: clamp(26px, 4vw, 40px); font-weight: 800; color: var(--navy); text-align: center; margin: 0; }
+    .section-sub { text-align: center; color: #64748b; max-width: 600px; margin: 0 auto; font-size: 16px; line-height: 1.7; }
+
+    input, textarea {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 6px;
+      font-family: 'Open Sans', sans-serif;
+      font-size: 15px;
+      transition: border-color 0.2s;
+      outline: none;
+      color: var(--navy);
+    }
+    input:focus, textarea:focus { border-color: var(--gold); }
+
+    .accordion-item { border: 1.5px solid #e2e8f0; border-radius: 8px; overflow: hidden; transition: border-color 0.2s; }
+    .accordion-item.open { border-color: var(--gold); }
+    .accordion-body { display: none; padding: 0 22px 20px; background: white; }
+    .accordion-body.open { display: block; }
+    .accordion-inner { border-top: 1px solid #f1f5f9; padding-top: 16px; }
+
+    .hero-pattern {
+      background-color: var(--navy);
+      background-image:
+        radial-gradient(circle at 20% 50%, rgba(212,175,55,0.08) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(212,175,55,0.06) 0%, transparent 40%);
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    .gold-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin: 16px 0;
+    }
+    .gold-divider-line { width: 40px; height: 1px; background: var(--gold); }
+    .gold-divider-diamond { width: 8px; height: 8px; background: var(--gold); transform: rotate(45deg); }
+
+    .icon-box {
+      background: rgba(212,175,55,0.12);
+      border-radius: 8px;
+      padding: 10px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .mobile-menu { display: none; background: #0f172a; padding: 16px 24px 24px; }
+    .mobile-menu.open { display: block; }
+
+    @media (max-width: 767px) {
+      .desktop-nav { display: none !important; }
+      .burger-btn { display: flex !important; }
+      .services-grid { grid-template-columns: 1fr !important; }
+      .realestate-grid { grid-template-columns: 1fr !important; }
+      .contact-grid { grid-template-columns: 1fr !important; }
+      .form-row { grid-template-columns: 1fr !important; }
+      .hero-cta { flex-direction: column; align-items: center; }
+      .trust-badges { gap: 20px !important; }
+    }
+
+    .outline-btn {
+      background: transparent;
+      border: 2px solid rgba(255,255,255,0.2);
+      color: white;
+      padding: 14px 32px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+      font-size: 15px;
+      transition: all 0.25s;
+    }
+    .outline-btn:hover { border-color: var(--gold); }
+
+    .plan-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    nav { background: var(--navy); position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 20px rgba(0,0,0,0.25); }
+    .nav-inner { max-width: 1100px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 68px; }
+
+    .nav-link {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #cbd5e1;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+      font-size: 14px;
+      letter-spacing: 0.3px;
+      padding: 0;
+      text-decoration: none;
+    }
+    .nav-link:hover { color: var(--gold); }
+
+    section { padding: 90px 24px; }
+
+    #submitted-msg { display: none; text-align: center; padding: 48px; }
+    #submitted-msg.show { display: block; }
+    #contact-form.hide { display: none; }
+
+    .check-item { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; font-size: 14px; color: #475569; }
+    .re-item { display: flex; gap: 14px; align-items: flex-start; }
+
+    .label-upper { display: block; font-size: 12px; font-family: 'Montserrat', sans-serif; font-weight: 600; color: #64748b; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+    .burger-btn { display: none; background: none; border: none; cursor: pointer; color: white; align-items: center; justify-content: center; }
+  </style>
+</head>
+<body>
+
+<!-- ─── NAVBAR ─── -->
+<nav>
+  <div class="nav-inner">
+    <div>
+      <div style="color:var(--gold);font-family:'Montserrat',sans-serif;font-weight:800;font-size:20px;letter-spacing:1px;">LUKÁŠ DAVID</div>
+      <div style="color:#94a3b8;font-size:10px;letter-spacing:2px;text-transform:uppercase;margin-top:-2px;">Finanční poradce</div>
+    </div>
+    <!-- Desktop nav -->
+    <div class="desktop-nav" style="display:flex;gap:32px;align-items:center;">
+      <button class="nav-link" onclick="scrollTo('#services')">Služby</button>
+      <button class="nav-link" onclick="scrollTo('#realestate')">Správa nemovitostí</button>
+      <button class="nav-link" onclick="scrollTo('#faq')">FAQ</button>
+      <button class="nav-link" onclick="scrollTo('#contact')">Kontakt</button>
+      <button class="gold-btn" onclick="scrollTo('#contact')" style="padding:10px 22px;font-size:13px;">Konzultace zdarma</button>
+    </div>
+    <!-- Burger -->
+    <button class="burger-btn" id="burger" onclick="toggleMenu()" aria-label="Menu">
+      <i data-lucide="menu" style="width:24px;height:24px;"></i>
+    </button>
+  </div>
+  <!-- Mobile menu -->
+  <div class="mobile-menu" id="mobile-menu">
+    <button class="nav-link" onclick="scrollTo('#services')" style="display:block;width:100%;text-align:left;padding:12px 0;border-bottom:1px solid #1e293b;font-size:15px;">Služby</button>
+    <button class="nav-link" onclick="scrollTo('#realestate')" style="display:block;width:100%;text-align:left;padding:12px 0;border-bottom:1px solid #1e293b;font-size:15px;">Správa nemovitostí</button>
+    <button class="nav-link" onclick="scrollTo('#faq')" style="display:block;width:100%;text-align:left;padding:12px 0;border-bottom:1px solid #1e293b;font-size:15px;">FAQ</button>
+    <button class="nav-link" onclick="scrollTo('#contact')" style="display:block;width:100%;text-align:left;padding:12px 0;border-bottom:1px solid #1e293b;font-size:15px;">Kontakt</button>
+    <button class="gold-btn" onclick="scrollTo('#contact')" style="margin-top:16px;width:100%;justify-content:center;">Konzultace zdarma</button>
+  </div>
+</nav>
+
+<!-- ─── HERO ─── -->
+<section class="hero-pattern" style="padding:100px 24px 90px;text-align:center;position:relative;overflow:hidden;">
+  <!-- Decorative circles -->
+  <div style="position:absolute;top:-60px;right:-60px;width:300px;height:300px;border-radius:50%;border:1px solid rgba(212,175,55,0.12);pointer-events:none;"></div>
+  <div style="position:absolute;top:-40px;right:-40px;width:200px;height:200px;border-radius:50%;border:1px solid rgba(212,175,55,0.08);pointer-events:none;"></div>
+  <div style="position:absolute;bottom:-80px;left:-80px;width:350px;height:350px;border-radius:50%;border:1px solid rgba(212,175,55,0.07);pointer-events:none;"></div>
+
+  <div style="max-width:760px;margin:0 auto;position:relative;z-index:1;" class="fade-in">
+    <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(212,175,55,0.15);border:1px solid rgba(212,175,55,0.3);border-radius:100px;padding:6px 18px;margin-bottom:28px;">
+      <i data-lucide="star" style="width:12px;height:12px;color:var(--gold);fill:var(--gold);"></i>
+      <span style="color:var(--gold);font-size:12px;font-family:'Montserrat',sans-serif;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;">Nezávislý finanční poradce · Praha</span>
+    </div>
+    <h1 style="color:white;font-size:clamp(30px,5vw,52px);font-weight:800;line-height:1.2;margin-bottom:24px;">
+      Stavím vaše finance<br />
+      <span style="color:var(--gold);">na pevných základech</span>
+    </h1>
+    <p style="color:#94a3b8;font-size:clamp(16px,2vw,19px);line-height:1.75;max-width:620px;margin:0 auto 44px;">
+      Od neprůstřelného pojištění po cestu k vlastnímu bydlení. Individuální strategie, objektivní srovnání celého trhu a nadstandardní péče o váš majetek pod jednou střechou.
+    </p>
+    <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;" class="hero-cta">
+      <button class="gold-btn" onclick="scrollTo('#contact')">
+        Nezávazná konzultace
+        <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+      </button>
+      <button class="outline-btn" onclick="scrollTo('#services')">Prozkoumat služby</button>
+    </div>
+    <!-- Trust badges -->
+    <div style="display:flex;gap:32px;justify-content:center;margin-top:60px;flex-wrap:wrap;" class="trust-badges">
+      <div style="text-align:center;">
+        <div style="color:var(--gold);font-family:'Montserrat',sans-serif;font-weight:800;font-size:28px;">Celý trh</div>
+        <div style="color:#64748b;font-size:12px;letter-spacing:0.5px;margin-top:2px;">bank a pojišťoven</div>
+      </div>
+      <div style="text-align:center;">
+        <div style="color:var(--gold);font-family:'Montserrat',sans-serif;font-weight:800;font-size:28px;">100%</div>
+        <div style="color:#64748b;font-size:12px;letter-spacing:0.5px;margin-top:2px;">objektivní srovnání</div>
+      </div>
+      <div style="text-align:center;">
+        <div style="color:var(--gold);font-family:'Montserrat',sans-serif;font-weight:800;font-size:28px;">ČNB</div>
+        <div style="color:#64748b;font-size:12px;letter-spacing:0.5px;margin-top:2px;">registrace</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SERVICES ─── -->
+<section id="services" style="background:#f8fafc;">
+  <div style="max-width:1100px;margin:0 auto;">
+    <div class="fade-in">
+      <p style="text-align:center;color:var(--gold);font-family:'Montserrat',sans-serif;font-weight:700;font-size:12px;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;">Hlavní pilíře</p>
+      <h2 class="section-title">S čím vám pomůžu</h2>
+      <div class="gold-divider"><div class="gold-divider-line"></div><div class="gold-divider-diamond"></div><div class="gold-divider-line"></div></div>
+      <p class="section-sub">Komplexní finanční servis na jednom místě – vše posuzuji nezávisle, z pohledu vašich zájmů.</p>
+    </div>
+
+    <div class="services-grid fade-in" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:28px;margin-top:56px;">
+
+      <!-- Card 1: Pojištění -->
+      <div class="card">
+        <div style="margin-bottom:20px;"><i data-lucide="shield" style="width:36px;height:36px;color:var(--gold);"></i></div>
+        <h3 style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:20px;margin-bottom:12px;color:var(--navy);">Pojištění</h3>
+        <p style="color:#64748b;font-size:14px;line-height:1.7;margin-bottom:20px;">Komplexní ochrana vás a vašeho majetku. Ochrana příjmu při invaliditě a vážných onemocněních, pojištění majetku a vozidel.</p>
+        <div class="check-item"><i data-lucide="check-circle" style="width:16px;height:16px;color:var(--gold);margin-top:2px;flex-shrink:0;"></i>Bezplatná revize stávajících smluv</div>
+        <div class="check-item"><i data-lucide="check-circle" style="width:16px;height:16px;color:var(--gold);margin-top:2px;flex-shrink:0;"></i>Ochrana příjmu (invalidita, nemoc)</div>
+        <div class="check-item"><i data-lucide="check-circle" style="width:16px;height:16px;color:var(--gold);margin-top:2px;flex-shrink:0;"></i>Pojištění majetku a vozidel</div>
+        <div class="check-item"><i data-lucide="check-circle" style="width:16px;height:16px;color:var(--gold);margin-top:2px;flex-shrink:0;"></i>Srovnání desítek pojišťoven</div>
+      </div>
+
+      <!-- Card 2: Investice -->
+      <div class="card">
+        <div style="margin-bottom:20px;"><i data-lucide="trending-up" style="width:36px;height:36px;color:var(--gold);"></i></div>
+        <h3 style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:20px;margin-bottom:12px;color:var(--navy);">Investice a spoření</h3>
+        <p style="color:#64748b;font-size:14px;line-height:1.7;margin-bottom:20px;">Chraňte úspory před inflací a budujte dlouhodobou finanční rentu. Analytický přístup přizpůsobený vašim cílům.</p>
+        <div class="check-item"><i data-lucide="check-circle" style="width:16px;height:16px;color:var(--gold);margin-top:2px;flex-shrink:0;"></i>Ochrana úspor před inflací</div>
+        <div class="check-item"><i data-lucide="check-circle" style="width:16px;height:16px;color:var(--gold);margin-top:2px;flex-shrink:0;"></i>Budování dlouhodobé renty</div>
+        <div class="check-item"><i data-lucide="check-circle" style="width:16px;height:16px;color:var(--gold);margin-top:2px;flex-shrink:0;"></i>Spoření pro děti (vzdělání, start do života)</div>
+        <div class="check-item"><i data-lucide="check-circle" style="width:16px;height:16px;color:var(--gold);margin-top:2px;flex-shrink:0;"></i>Investiční strategie na míru</div>
+      </div>
+
+      <!-- Card 3: Financování -->
+      <div class="card">
+        <div style="margin-bottom:20px;"><i data-lucide="home" style="width:36px;height:36px;color:var(--gold);"></i></div>
+        <h3 style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:20px;margin-bottom:12px;color:var(--navy);">Financování a úvěry</h3>
+        <p style="color:#64748b;font-size:14px;line-height:1.7;margin-bottom:20px;">Kompletní vyřízení hypotéky nebo úvěru od A do Z. Porovnám všechny banky na trhu, vy se staráte jen o stěhování.</p>
+        <div class="check-item"><i data-lucide="check-circle" style="width:16px;height:16px;color:var(--gold);margin-top:2px;flex-shrink:0;"></i>Srovnání hypoték celého trhu</div>
+        <div class="check-item"><i data-lucide="check-circle" style="width:16px;height:16px;color:var(--gold);margin-top:2px;flex-shrink:0;"></i>Administrativa a komunikace s bankou</div>
+        <div class="check-item"><i data-lucide="check-circle" style="width:16px;height:16px;color:var(--gold);margin-top:2px;flex-shrink:0;"></i>Refinancování stávajících úvěrů</div>
+        <div class="check-item"><i data-lucide="check-circle" style="width:16px;height:16px;color:var(--gold);margin-top:2px;flex-shrink:0;"></i>Příprava žádosti a zastupování</div>
+      </div>
+
+      <!-- Card 4: Finanční plánování -->
+      <div class="card">
+        <div style="margin-bottom:20px;"><i data-lucide="bar-chart-2" style="width:36px;height:36px;color:var(--gold);"></i></div>
+        <h3 style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:20px;margin-bottom:12px;color:var(--navy);">Finanční plánování</h3>
+        <p style="color:#64748b;font-size:14px;line-height:1.7;margin-bottom:20px;">Komplexní pohled na vaše finance – od sestavení rodinného rozpočtu po dlouhodobou strategii finanční svobody.</p>
+        <div class="check-item"><i data-lucide="check-circle" style="width:16px;height:16px;color:var(--gold);margin-top:2px;flex-shrink:0;"></i>Analýza aktuální finanční situace</div>
+        <div class="check-item"><i data-lucide="check-circle" style="width:16px;height:16px;color:var(--gold);margin-top:2px;flex-shrink:0;"></i>Nastavení krátkodobých i dlouhodobých cílů</div>
+        <div class="check-item"><i data-lucide="check-circle" style="width:16px;height:16px;color:var(--gold);margin-top:2px;flex-shrink:0;"></i>Plán finanční nezávislosti</div>
+        <div class="check-item"><i data-lucide="check-circle" style="width:16px;height:16px;color:var(--gold);margin-top:2px;flex-shrink:0;"></i>Pravidelné revize a aktualizace plánu</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─── REAL ESTATE ─── -->
+<section id="realestate" style="background:white;">
+  <div style="max-width:1100px;margin:0 auto;">
+    <div class="fade-in">
+      <p style="text-align:center;color:var(--gold);font-family:'Montserrat',sans-serif;font-weight:700;font-size:12px;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;">Prémiová služba</p>
+      <h2 class="section-title">Správa nemovitostí v Praze</h2>
+      <div class="gold-divider"><div class="gold-divider-line"></div><div class="gold-divider-diamond"></div><div class="gold-divider-line"></div></div>
+      <p class="section-sub">Vy máte klid, já zodpovědnost. Postarám se o vše – od vyhledání nájemníků po kontrolu plateb.</p>
+    </div>
+
+    <div class="realestate-grid fade-in" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:32px;margin-top:60px;">
+
+      <!-- Services list -->
+      <div>
+        <h3 style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:22px;margin-bottom:24px;color:var(--navy);">Co zahrnuje správa?</h3>
+        <div style="display:flex;flex-direction:column;gap:16px;">
+
+          <div class="re-item">
+            <div class="icon-box"><i data-lucide="users" style="width:20px;height:20px;color:var(--gold);"></i></div>
+            <div>
+              <div style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:15px;color:var(--navy);margin-bottom:3px;">Výběr nájemníků</div>
+              <div style="color:#64748b;font-size:13px;line-height:1.5;">Prověření v registrech dlužníků, platební schopnost, reference</div>
+            </div>
+          </div>
+
+          <div class="re-item">
+            <div class="icon-box"><i data-lucide="file-text" style="width:20px;height:20px;color:var(--gold);"></i></div>
+            <div>
+              <div style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:15px;color:var(--navy);margin-bottom:3px;">Smluvní dokumentace</div>
+              <div style="color:#64748b;font-size:13px;line-height:1.5;">Příprava nájemní smlouvy a veškeré administrativy</div>
+            </div>
+          </div>
+
+          <div class="re-item">
+            <div class="icon-box"><i data-lucide="key" style="width:20px;height:20px;color:var(--gold);"></i></div>
+            <div>
+              <div style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:15px;color:var(--navy);margin-bottom:3px;">Pravidelné kontroly</div>
+              <div style="color:#64748b;font-size:13px;line-height:1.5;">2× ročně fyzická kontrola stavu nemovitosti</div>
+            </div>
+          </div>
+
+          <div class="re-item">
+            <div class="icon-box"><i data-lucide="bar-chart-2" style="width:20px;height:20px;color:var(--gold);"></i></div>
+            <div>
+              <div style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:15px;color:var(--navy);margin-bottom:3px;">Měsíční reporty</div>
+              <div style="color:#64748b;font-size:13px;line-height:1.5;">Přehled plateb, stavu nemovitosti a veškeré komunikace</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Pricing card -->
+      <div>
+        <h3 style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:22px;margin-bottom:24px;color:var(--navy);">Cenový model</h3>
+        <div style="border:2px solid var(--gold);border-radius:12px;overflow:hidden;">
+          <div style="background:var(--gold);padding:14px 24px;">
+            <div style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:17px;color:var(--navy);">Plán Základní</div>
+          </div>
+          <div style="padding:20px 24px;">
+            <div class="plan-row">
+              <span style="color:#64748b;font-size:14px;">Váš podíl z nájmu</span>
+              <span style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:15px;color:var(--navy);">91 %</span>
+            </div>
+            <div class="plan-row">
+              <span style="color:#64748b;font-size:14px;">Garance při neplatičích</span>
+              <span style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:15px;color:var(--gold);">60 % *</span>
+            </div>
+            <div class="plan-row" style="border-bottom:none;">
+              <span style="color:#64748b;font-size:14px;">Platba při neobsazenosti</span>
+              <span style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:15px;color:var(--navy);">1 Kč</span>
+            </div>
+            <p style="font-size:12px;color:#94a3b8;margin-top:14px;margin-bottom:0;line-height:1.6;">
+              * K vyplacení dojde po úspěšném vymožení dlužné částky.
+            </p>
+            <button class="gold-btn" onclick="scrollTo('#contact')" style="width:100%;justify-content:center;margin-top:20px;">
+              Mám zájem
+              <i data-lucide="arrow-right" style="width:15px;height:15px;"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─── FAQ ─── -->
+<section id="faq" style="background:#f8fafc;">
+  <div style="max-width:760px;margin:0 auto;">
+    <div class="fade-in">
+      <p style="text-align:center;color:var(--gold);font-family:'Montserrat',sans-serif;font-weight:700;font-size:12px;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;">Dotazy</p>
+      <h2 class="section-title">Časté otázky</h2>
+      <div class="gold-divider"><div class="gold-divider-line"></div><div class="gold-divider-diamond"></div><div class="gold-divider-line"></div></div>
+    </div>
+
+    <div style="margin-top:48px;display:flex;flex-direction:column;gap:14px;" class="fade-in">
+
+      <div class="accordion-item" id="acc-0">
+        <button onclick="toggleAccordion(0)" style="width:100%;display:flex;justify-content:space-between;align-items:center;padding:18px 22px;background:white;border:none;cursor:pointer;text-align:left;gap:12px;">
+          <span style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:15px;color:var(--navy);line-height:1.4;">Kolik stojí vaše finanční poradenství?</span>
+          <i data-lucide="chevron-down" class="acc-icon" style="width:18px;height:18px;color:#94a3b8;flex-shrink:0;transition:transform 0.2s;"></i>
+        </button>
+        <div class="accordion-body" id="acc-body-0">
+          <div class="accordion-inner"><p style="color:#64748b;font-size:14px;line-height:1.8;margin:0;">Finanční poradenství poskytuji zcela bezplatně. Jsem odměňován provizemi od finančních institucí, ale tato skutečnost nijak neovlivňuje mé doporučení – porovnávám celý trh a vždy doporučuji to nejlepší řešení pro vás.</p></div>
+        </div>
+      </div>
+
+      <div class="accordion-item" id="acc-1">
+        <button onclick="toggleAccordion(1)" style="width:100%;display:flex;justify-content:space-between;align-items:center;padding:18px 22px;background:white;border:none;cursor:pointer;text-align:left;gap:12px;">
+          <span style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:15px;color:var(--navy);line-height:1.4;">Proč se obrátit na vás místo přímo na banku?</span>
+          <i data-lucide="chevron-down" class="acc-icon" style="width:18px;height:18px;color:#94a3b8;flex-shrink:0;transition:transform 0.2s;"></i>
+        </button>
+        <div class="accordion-body" id="acc-body-1">
+          <div class="accordion-inner"><p style="color:#64748b;font-size:14px;line-height:1.8;margin:0;">Banka nabízí pouze vlastní produkty. Já jako nezávislý poradce porovnávám desítky bank a pojišťoven a vyberu to, co skutečně odpovídá vašim potřebám a finanční situaci – bez skrytých zájmů.</p></div>
+        </div>
+      </div>
+
+      <div class="accordion-item" id="acc-2">
+        <button onclick="toggleAccordion(2)" style="width:100%;display:flex;justify-content:space-between;align-items:center;padding:18px 22px;background:white;border:none;cursor:pointer;text-align:left;gap:12px;">
+          <span style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:15px;color:var(--navy);line-height:1.4;">Jak funguje bezplatná revize stávajících smluv?</span>
+          <i data-lucide="chevron-down" class="acc-icon" style="width:18px;height:18px;color:#94a3b8;flex-shrink:0;transition:transform 0.2s;"></i>
+        </button>
+        <div class="accordion-body" id="acc-body-2">
+          <div class="accordion-inner"><p style="color:#64748b;font-size:14px;line-height:1.8;margin:0;">Přinesite mi stávající pojistné smlouvy a já provedu detailní analýzu – zda máte dostatečné krytí, zda neplatíte zbytečně a zda nejsou lepší alternativy. Vše bezplatně a nezávazně.</p></div>
+        </div>
+      </div>
+
+      <div class="accordion-item" id="acc-3">
+        <button onclick="toggleAccordion(3)" style="width:100%;display:flex;justify-content:space-between;align-items:center;padding:18px 22px;background:white;border:none;cursor:pointer;text-align:left;gap:12px;">
+          <span style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:15px;color:var(--navy);line-height:1.4;">Jak probíhá správa nemovitosti?</span>
+          <i data-lucide="chevron-down" class="acc-icon" style="width:18px;height:18px;color:#94a3b8;flex-shrink:0;transition:transform 0.2s;"></i>
+        </button>
+        <div class="accordion-body" id="acc-body-3">
+          <div class="accordion-inner"><p style="color:#64748b;font-size:14px;line-height:1.8;margin:0;">Po podpisu smlouvy přebírám kompletní péči o vaši nemovitost – inzerci, výběr nájemníků, přípravu smluv i pravidelné kontroly. Vy dostáváte měsíční reporty a nemusíte řešit nic.</p></div>
+        </div>
+      </div>
+
+      <div class="accordion-item" id="acc-4">
+        <button onclick="toggleAccordion(4)" style="width:100%;display:flex;justify-content:space-between;align-items:center;padding:18px 22px;background:white;border:none;cursor:pointer;text-align:left;gap:12px;">
+          <span style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:15px;color:var(--navy);line-height:1.4;">Co se stane, když nájemník přestane platit?</span>
+          <i data-lucide="chevron-down" class="acc-icon" style="width:18px;height:18px;color:#94a3b8;flex-shrink:0;transition:transform 0.2s;"></i>
+        </button>
+        <div class="accordion-body" id="acc-body-4">
+          <div class="accordion-inner"><p style="color:#64748b;font-size:14px;line-height:1.8;margin:0;">Právě pro tyto situace je tu garance nájmu. Dle zvoleného tarifu dostanete 60 % nájmu i při neplatícím nájemníkovi. K vyplacení dojde po úspěšném vymožení dlužné částky. Váš příjem je tedy chráněn i v těchto nepříjemných situacích.</p></div>
+        </div>
+      </div>
+
+      <div class="accordion-item" id="acc-5">
+        <button onclick="toggleAccordion(5)" style="width:100%;display:flex;justify-content:space-between;align-items:center;padding:18px 22px;background:white;border:none;cursor:pointer;text-align:left;gap:12px;">
+          <span style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:15px;color:var(--navy);line-height:1.4;">Pomůžete mi i při změně životní situace (rozvod, nové dítě, ztráta zaměstnání)?</span>
+          <i data-lucide="chevron-down" class="acc-icon" style="width:18px;height:18px;color:#94a3b8;flex-shrink:0;transition:transform 0.2s;"></i>
+        </button>
+        <div class="accordion-body" id="acc-body-5">
+          <div class="accordion-inner"><p style="color:#64748b;font-size:14px;line-height:1.8;margin:0;">Absolutně. Jsem váš dlouhodobý partner, ne jednorázový zprostředkovatel. Pravidelně revidujeme vaše smlouvy a reagujeme na změny v životě – aby vaše finanční zajištění vždy odpovídalo vaší situaci.</p></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─── CONTACT ─── -->
+<section id="contact" style="background:white;">
+  <div style="max-width:1000px;margin:0 auto;">
+    <div class="fade-in">
+      <p style="text-align:center;color:var(--gold);font-family:'Montserrat',sans-serif;font-weight:700;font-size:12px;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;">Spojme se</p>
+      <h2 class="section-title">Kontakt</h2>
+      <div class="gold-divider"><div class="gold-divider-line"></div><div class="gold-divider-diamond"></div><div class="gold-divider-line"></div></div>
+      <p class="section-sub" style="margin-top:16px;">Napište mi – první konzultace je vždy bezplatná a nezávazná.</p>
+    </div>
+
+    <div class="contact-grid fade-in" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:48px;margin-top:56px;align-items:start;">
+
+      <!-- Info -->
+      <div>
+        <h3 style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:20px;margin-bottom:28px;color:var(--navy);">Lukáš David</h3>
+        <div style="display:flex;flex-direction:column;gap:18px;">
+
+          <div style="display:flex;gap:14px;align-items:flex-start;">
+            <div class="icon-box"><i data-lucide="phone" style="width:18px;height:18px;color:var(--gold);"></i></div>
+            <div>
+              <div style="font-size:12px;color:#94a3b8;margin-bottom:2px;text-transform:uppercase;letter-spacing:0.5px;">Telefon</div>
+              <div style="font-family:'Montserrat',sans-serif;font-weight:600;font-size:15px;color:var(--navy);">+420 XXX XXX XXX</div>
+            </div>
+          </div>
+
+          <div style="display:flex;gap:14px;align-items:flex-start;">
+            <div class="icon-box"><i data-lucide="mail" style="width:18px;height:18px;color:var(--gold);"></i></div>
+            <div>
+              <div style="font-size:12px;color:#94a3b8;margin-bottom:2px;text-transform:uppercase;letter-spacing:0.5px;">E-mail</div>
+              <div style="font-family:'Montserrat',sans-serif;font-weight:600;font-size:15px;color:var(--navy);">lukas.david@gfsgroup.cz</div>
+            </div>
+          </div>
+
+          <div style="display:flex;gap:14px;align-items:flex-start;">
+            <div class="icon-box"><i data-lucide="map-pin" style="width:18px;height:18px;color:var(--gold);"></i></div>
+            <div>
+              <div style="font-size:12px;color:#94a3b8;margin-bottom:2px;text-transform:uppercase;letter-spacing:0.5px;">Oblast působení</div>
+              <div style="font-family:'Montserrat',sans-serif;font-weight:600;font-size:15px;color:var(--navy);">Praha a okolí</div>
+            </div>
+          </div>
+
+        </div>
+        <div style="margin-top:40px;padding:20px;background:#f8fafc;border-radius:8px;border-left:4px solid var(--gold);">
+          <p style="margin:0;font-size:13px;color:#64748b;line-height:1.6;">
+            Registrovaný u České národní banky (ČNB). První konzultace vždy bezplatně a nezávazně.
+          </p>
+        </div>
+      </div>
+
+      <!-- Form -->
+      <div>
+        <div id="submitted-msg">
+          <i data-lucide="check-circle" style="width:56px;height:56px;color:var(--gold);margin-bottom:16px;"></i>
+          <h3 style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:22px;margin-bottom:10px;color:var(--navy);">Zpráva odeslána!</h3>
+          <p style="color:#64748b;font-size:15px;">Ozvu se vám co nejdříve, zpravidla do 24 hodin.</p>
+        </div>
+        <form id="contact-form" onsubmit="handleSubmit(event)" style="display:flex;flex-direction:column;gap:16px;">
+          <div class="form-row" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+            <div>
+              <label class="label-upper">Jméno *</label>
+              <input required placeholder="Jan Novák" />
+            </div>
+            <div>
+              <label class="label-upper">Telefon</label>
+              <input placeholder="+420 777 888 999" />
+            </div>
+          </div>
+          <div>
+            <label class="label-upper">E-mail *</label>
+            <input required type="email" placeholder="jan@novak.cz" />
+          </div>
+          <div>
+            <label class="label-upper">Zpráva</label>
+            <textarea rows="4" placeholder="Popište, s čím vám mohu pomoci..." style="resize:vertical;"></textarea>
+          </div>
+          <button type="submit" class="gold-btn" style="justify-content:center;margin-top:4px;">
+            Odeslat zprávu
+            <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+          </button>
+          <p style="font-size:12px;color:#94a3b8;text-align:center;margin:0;">Vaše údaje jsou v bezpečí a nebudou sdíleny třetím stranám.</p>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer style="background:var(--navy);padding:40px 24px;text-align:center;">
+  <div style="max-width:1100px;margin:0 auto;">
+    <div style="color:var(--gold);font-family:'Montserrat',sans-serif;font-weight:800;font-size:18px;letter-spacing:1px;margin-bottom:8px;">LUKÁŠ DAVID</div>
+    <p style="color:#64748b;font-size:13px;margin-bottom:16px;line-height:1.6;">
+      Finanční poradce registrovaný u ČNB · Praha
+    </p>
+    <div style="display:flex;justify-content:center;gap:24px;flex-wrap:wrap;margin-bottom:20px;">
+      <button class="nav-link" onclick="scrollTo('#services')">Služby</button>
+      <button class="nav-link" onclick="scrollTo('#realestate')">Správa nemovitostí</button>
+      <button class="nav-link" onclick="scrollTo('#faq')">FAQ</button>
+      <button class="nav-link" onclick="scrollTo('#contact')">Kontakt</button>
+    </div>
+    <div style="border-top:1px solid #334155;padding-top:20px;">
+      <p style="color:#334155;font-size:12px;margin:0;">© <span id="year"></span> Lukáš David. Všechna práva vyhrazena.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Init Lucide icons
+  lucide.createIcons();
+
+  // Year
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Smooth scroll
+  function scrollTo(id) {
+    const el = document.querySelector(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+    // close mobile menu
+    document.getElementById('mobile-menu').classList.remove('open');
+    const burger = document.getElementById('burger');
+    burger.innerHTML = '<i data-lucide="menu" style="width:24px;height:24px;"></i>';
+    lucide.createIcons();
+  }
+
+  // Mobile menu
+  let menuOpen = false;
+  function toggleMenu() {
+    menuOpen = !menuOpen;
+    const menu = document.getElementById('mobile-menu');
+    const burger = document.getElementById('burger');
+    if (menuOpen) {
+      menu.classList.add('open');
+      burger.innerHTML = '<i data-lucide="x" style="width:24px;height:24px;"></i>';
+    } else {
+      menu.classList.remove('open');
+      burger.innerHTML = '<i data-lucide="menu" style="width:24px;height:24px;"></i>';
+    }
+    lucide.createIcons();
+  }
+
+  // Accordion
+  let activeAcc = null;
+  function toggleAccordion(i) {
+    const total = 6;
+    if (activeAcc === i) {
+      // close
+      document.getElementById('acc-' + i).classList.remove('open');
+      document.getElementById('acc-body-' + i).classList.remove('open');
+      const icon = document.querySelector('#acc-' + i + ' .acc-icon');
+      if (icon) icon.style.transform = 'rotate(0deg)';
+      activeAcc = null;
+    } else {
+      // close previous
+      if (activeAcc !== null) {
+        document.getElementById('acc-' + activeAcc).classList.remove('open');
+        document.getElementById('acc-body-' + activeAcc).classList.remove('open');
+        const prevIcon = document.querySelector('#acc-' + activeAcc + ' .acc-icon');
+        if (prevIcon) prevIcon.style.transform = 'rotate(0deg)';
+      }
+      // open new
+      document.getElementById('acc-' + i).classList.add('open');
+      document.getElementById('acc-body-' + i).classList.add('open');
+      const icon = document.querySelector('#acc-' + i + ' .acc-icon');
+      if (icon) icon.style.transform = 'rotate(180deg)';
+      activeAcc = i;
+    }
+  }
+
+  // Form submit
+  function handleSubmit(e) {
+    e.preventDefault();
+    document.getElementById('contact-form').classList.add('hide');
+    const msg = document.getElementById('submitted-msg');
+    msg.classList.add('show');
+    lucide.createIcons();
+  }
+
+  // Fade-in on scroll
+  const fadeEls = document.querySelectorAll('.fade-in');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, idx) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  fadeEls.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
