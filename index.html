@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lukáš David – Finanční poradce</title>
+  <meta name="description" content="Nezávislý finanční poradce Lukáš David. Pojištění, investice, hypotéky a správa nemovitostí v Praze."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    /* ── RESET & BASE ── */
+    :root{--gold:#d4af37;--gold-light:#e8cc6a;--navy:#1e293b;--navy-dark:#0f172a;--slate:#64748b;--bg:#f8fafc;}
+    *,*::before,*::after{box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{font-family:'Open Sans',sans-serif;color:var(--navy);overflow-x:hidden;margin:0;background:#fff;}
+    h1,h2,h3,h4,h5{font-family:'Montserrat',sans-serif;margin:0;}
+    p{margin:0;}
+    ul{margin:0;padding:0;list-style:none;}
+    a{text-decoration:none;color:inherit;}
+    button{font-family:inherit;cursor:pointer;}
+
+    /* ── UTILITY ── */
+    .wrap{max-width:1100px;margin:0 auto;padding:0 24px;}
+    .wrap-sm{max-width:800px;margin:0 auto;padding:0 24px;}
+    .wrap-md{max-width:960px;margin:0 auto;padding:0 24px;}
+    .sec{padding:90px 24px;}
+    .sec-alt{background:var(--bg);}
+
+    /* ── FADE-IN ── */
+    .fi{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease;}
+    .fi.v{opacity:1;transform:none;}
+    .fi-d1{transition-delay:.08s;}
+    .fi-d2{transition-delay:.16s;}
+    .fi-d3{transition-delay:.24s;}
+    .fi-d4{transition-delay:.32s;}
+
+    /* ── GOLD DIVIDER ── */
+    .gdiv{display:flex;align-items:center;justify-content:center;gap:10px;margin:14px 0;}
+    .gdiv-l{width:40px;height:1px;background:var(--gold);}
+    .gdiv-d{width:8px;height:8px;background:var(--gold);transform:rotate(45deg);}
+
+    /* ── BUTTONS ── */
+    .btn-gold{background:var(--gold);color:var(--navy);font-weight:700;padding:14px 30px;border-radius:4px;border:none;cursor:pointer;font-family:'Montserrat',sans-serif;font-size:15px;letter-spacing:.4px;transition:all .25s;display:inline-flex;align-items:center;gap:8px;}
+    .btn-gold:hover{background:#c49b2a;transform:translateY(-2px);box-shadow:0 8px 24px rgba(212,175,55,.35);}
+    .btn-outline{background:transparent;border:2px solid rgba(255,255,255,.25);color:white;padding:14px 30px;border-radius:4px;cursor:pointer;font-family:'Montserrat',sans-serif;font-weight:600;font-size:15px;transition:all .25s;display:inline-flex;align-items:center;gap:8px;}
+    .btn-outline:hover{border-color:var(--gold);}
+    .btn-navy{background:var(--navy);color:white;font-weight:700;padding:14px 30px;border-radius:4px;border:none;cursor:pointer;font-family:'Montserrat',sans-serif;font-size:15px;transition:all .25s;display:inline-flex;align-items:center;gap:8px;}
+    .btn-navy:hover{background:#2d3f55;transform:translateY(-2px);}
+
+    /* ── SECTION HEADER ── */
+    .sh-label{text-align:center;color:var(--gold);font-family:'Montserrat',sans-serif;font-weight:700;font-size:11px;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:10px;}
+    .sh-title{font-size:clamp(24px,4vw,40px);font-weight:800;color:var(--navy);text-align:center;}
+    .sh-sub{text-align:center;color:var(--slate);max-width:580px;margin:16px auto 0;font-size:16px;line-height:1.7;}
+
+    /* ── NAVBAR ── */
+    #navbar{background:var(--navy);position:sticky;top:0;z-index:200;box-shadow:0 2px 20px rgba(0,0,0,.28);}
+    .nb-inner{max-width:1100px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:66px;}
+    .nb-logo-name{color:var(--gold);font-family:'Montserrat',sans-serif;font-weight:800;font-size:19px;letter-spacing:1px;cursor:pointer;}
+    .nb-logo-sub{color:#94a3b8;font-size:9px;letter-spacing:2.5px;text-transform:uppercase;margin-top:-2px;}
+    .nb-links{display:flex;gap:28px;align-items:center;}
+    .nb-link{background:none;border:none;color:#cbd5e1;font-family:'Montserrat',sans-serif;font-weight:600;font-size:13.5px;padding:0;transition:color .2s;cursor:pointer;}
+    .nb-link:hover,.nb-link.active{color:var(--gold);}
+    .nb-cta{padding:9px 20px;font-size:13px;}
+    .burger{display:none;background:none;border:none;color:white;padding:4px;cursor:pointer;}
+    .mob-menu{display:none;background:#0f172a;padding:12px 24px 20px;}
+    .mob-menu.open{display:block;}
+    .mob-link{display:block;width:100%;text-align:left;background:none;border:none;color:#cbd5e1;font-family:'Montserrat',sans-serif;font-weight:600;font-size:15px;padding:11px 0;border-bottom:1px solid #1e293b;cursor:pointer;}
+    .mob-link:hover{color:var(--gold);}
+
+    /* ── PAGES ── */
+    .page{display:none;}
+    .page.active{display:block;}
+
+    /* ── HERO (HOME) ── */
+    .hero{background:var(--navy-dark);background-image:radial-gradient(circle at 15% 50%,rgba(212,175,55,.09) 0%,transparent 50%),radial-gradient(circle at 85% 15%,rgba(212,175,55,.07) 0%,transparent 45%);padding:96px 24px 84px;text-align:center;position:relative;overflow:hidden;}
+    .hero-deco{position:absolute;border-radius:50%;pointer-events:none;}
+    .hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(212,175,55,.14);border:1px solid rgba(212,175,55,.32);border-radius:100px;padding:6px 18px;margin-bottom:26px;}
+    .hero-badge span{color:var(--gold);font-size:11px;font-family:'Montserrat',sans-serif;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;}
+    .hero h1{color:white;font-size:clamp(28px,5vw,54px);font-weight:900;line-height:1.18;margin-bottom:22px;}
+    .hero h1 em{color:var(--gold);font-style:normal;}
+    .hero-sub{color:#94a3b8;font-size:clamp(15px,2vw,18px);line-height:1.8;max-width:600px;margin:0 auto 40px;}
+    .hero-cta{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;}
+    .hero-stats{display:flex;gap:40px;justify-content:center;margin-top:56px;flex-wrap:wrap;}
+    .hero-stat-val{color:var(--gold);font-family:'Montserrat',sans-serif;font-weight:800;font-size:26px;}
+    .hero-stat-lbl{color:#475569;font-size:12px;margin-top:2px;}
+
+    /* ── TILES (rozcestník) ── */
+    .tiles-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:20px;margin-top:48px;}
+    .tile{background:white;border-radius:10px;padding:30px 24px;box-shadow:0 3px 20px rgba(30,41,59,.07);border:1.5px solid #f1f5f9;transition:all .3s;cursor:pointer;text-align:left;}
+    .tile:hover{transform:translateY(-5px);box-shadow:0 14px 36px rgba(30,41,59,.13);border-color:var(--gold);}
+    .tile-icon{width:48px;height:48px;background:rgba(212,175,55,.1);border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;}
+    .tile h3{font-family:'Montserrat',sans-serif;font-weight:700;font-size:17px;margin-bottom:8px;}
+    .tile p{color:var(--slate);font-size:14px;line-height:1.6;}
+    .tile-arrow{margin-top:16px;color:var(--gold);display:flex;align-items:center;gap:6px;font-size:13px;font-family:'Montserrat',sans-serif;font-weight:700;}
+
+    /* ── PILLAR SECTIONS ── */
+    .pillar{padding:72px 24px;}
+    .pillar:nth-child(even){background:var(--bg);}
+    .pillar-inner{max-width:1060px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;}
+    .pillar-inner.rev{direction:rtl;}
+    .pillar-inner.rev > *{direction:ltr;}
+    .pillar-visual{background:var(--navy);border-radius:16px;padding:40px 36px;position:relative;overflow:hidden;}
+    .pillar-visual-deco{position:absolute;border-radius:50%;pointer-events:none;}
+    .pillar-tag{display:inline-flex;align-items:center;gap:6px;background:rgba(212,175,55,.15);border:1px solid rgba(212,175,55,.3);border-radius:100px;padding:5px 14px;margin-bottom:18px;}
+    .pillar-tag span{color:var(--gold);font-size:11px;font-family:'Montserrat',sans-serif;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;}
+    .pillar-content h2{font-size:clamp(22px,3vw,32px);font-weight:800;margin-bottom:16px;line-height:1.25;}
+    .pillar-content p{color:var(--slate);line-height:1.75;font-size:15px;margin-bottom:20px;}
+    .pillar-list{display:flex;flex-direction:column;gap:10px;margin-bottom:24px;}
+    .pillar-item{display:flex;align-items:flex-start;gap:10px;font-size:14px;color:#334155;line-height:1.5;}
+    .highlight-box{background:rgba(212,175,55,.08);border:1px solid rgba(212,175,55,.25);border-radius:8px;padding:16px 20px;margin-bottom:20px;}
+    .highlight-box p{color:var(--navy);font-size:14px;line-height:1.6;font-weight:500;}
+
+    /* ── KAPS PROCESS ── */
+    .kaps-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:2px;margin-top:48px;border-radius:12px;overflow:hidden;box-shadow:0 4px 24px rgba(30,41,59,.1);}
+    .kaps-step{background:white;padding:36px 28px;position:relative;transition:background .25s;}
+    .kaps-step:hover{background:var(--navy);}
+    .kaps-step:hover .kaps-num,.kaps-step:hover h3,.kaps-step:hover p{color:white;}
+    .kaps-step:hover .kaps-icon-wrap{background:rgba(212,175,55,.2);}
+    .kaps-num{font-family:'Montserrat',sans-serif;font-weight:900;font-size:11px;letter-spacing:2px;color:var(--gold);text-transform:uppercase;margin-bottom:18px;}
+    .kaps-letter{font-size:56px;font-weight:900;color:rgba(212,175,55,.12);position:absolute;top:16px;right:20px;font-family:'Montserrat',sans-serif;line-height:1;pointer-events:none;}
+    .kaps-icon-wrap{width:44px;height:44px;background:rgba(212,175,55,.1);border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;transition:background .25s;}
+    .kaps-step h3{font-family:'Montserrat',sans-serif;font-weight:700;font-size:18px;margin-bottom:10px;color:var(--navy);transition:color .25s;}
+    .kaps-step p{color:var(--slate);font-size:14px;line-height:1.65;transition:color .25s;}
+
+    /* ── FAQ ── */
+    .acc-item{border:1.5px solid #e2e8f0;border-radius:8px;overflow:hidden;margin-bottom:12px;background:white;transition:border-color .2s;}
+    .acc-item.open{border-color:var(--gold);}
+    .acc-btn{width:100%;display:flex;justify-content:space-between;align-items:center;padding:17px 22px;background:white;border:none;cursor:pointer;text-align:left;gap:12px;}
+    .acc-btn span{font-family:'Montserrat',sans-serif;font-weight:700;font-size:15px;line-height:1.4;color:var(--navy);}
+    .acc-chev{transition:transform .25s;flex-shrink:0;}
+    .acc-body{display:none;padding:0 22px 18px;}
+    .acc-body.open{display:block;}
+    .acc-inner{border-top:1px solid #f1f5f9;padding-top:14px;}
+    .acc-inner p{color:var(--slate);font-size:14px;line-height:1.8;}
+
+    /* ── CONTACT ── */
+    .contact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:48px;margin-top:52px;align-items:start;}
+    .contact-item{display:flex;gap:14px;align-items:flex-start;}
+    .c-icon{background:rgba(212,175,55,.12);border-radius:8px;padding:10px;flex-shrink:0;display:flex;}
+    .c-lbl{font-size:11px;color:#94a3b8;text-transform:uppercase;letter-spacing:.6px;margin-bottom:2px;}
+    .c-val{font-family:'Montserrat',sans-serif;font-weight:600;font-size:15px;}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;}
+    .form-group{margin-bottom:16px;}
+    .form-label{display:block;font-size:11px;font-family:'Montserrat',sans-serif;font-weight:700;color:var(--slate);margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px;}
+    input,textarea{width:100%;padding:11px 15px;border:1.5px solid #e2e8f0;border-radius:6px;font-family:'Open Sans',sans-serif;font-size:15px;transition:border-color .2s;outline:none;color:var(--navy);}
+    input:focus,textarea:focus{border-color:var(--gold);}
+    #submitted-msg{display:none;text-align:center;padding:36px 20px;}
+    #submitted-msg.show{display:block;}
+    #contact-form.hide{display:none;}
+
+    /* ── FOOTER ── */
+    footer{background:var(--navy-dark);padding:44px 24px;text-align:center;}
+    .ft-name{color:var(--gold);font-family:'Montserrat',sans-serif;font-weight:800;font-size:18px;letter-spacing:1px;margin-bottom:8px;}
+    .ft-sub{color:#475569;font-size:13px;margin-bottom:18px;line-height:1.6;}
+    .ft-links{display:flex;justify-content:center;gap:22px;flex-wrap:wrap;margin-bottom:20px;}
+    .ft-link{background:none;border:none;cursor:pointer;color:#475569;font-size:13px;font-family:'Montserrat',sans-serif;font-weight:600;transition:color .2s;}
+    .ft-link:hover{color:var(--gold);}
+    .ft-copy{color:#334155;font-size:12px;border-top:1px solid #1e293b;padding-top:18px;margin-top:4px;}
+
+    /* ── RE PAGE (Správa nemovitostí) ── */
+    .re-hero{background:var(--navy-dark);background-image:radial-gradient(circle at 20% 60%,rgba(212,175,55,.1) 0%,transparent 50%),radial-gradient(circle at 80% 10%,rgba(212,175,55,.06) 0%,transparent 40%);padding:80px 24px;text-align:center;position:relative;overflow:hidden;}
+    .re-hero h1{color:white;font-size:clamp(26px,4.5vw,48px);font-weight:900;line-height:1.2;margin-bottom:18px;}
+    .re-hero h1 em{color:var(--gold);font-style:normal;}
+    .re-hero p{color:#94a3b8;font-size:clamp(15px,1.8vw,18px);line-height:1.75;max-width:580px;margin:0 auto 36px;}
+
+    .re-services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;margin-top:44px;}
+    .re-card{background:white;border-radius:10px;padding:28px 24px;box-shadow:0 3px 18px rgba(30,41,59,.07);border:1.5px solid #f1f5f9;transition:all .3s;}
+    .re-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(30,41,59,.12);border-color:var(--gold);}
+    .re-card-icon{width:44px;height:44px;background:rgba(212,175,55,.1);border-radius:9px;display:flex;align-items:center;justify-content:center;margin-bottom:14px;}
+    .re-card h3{font-family:'Montserrat',sans-serif;font-weight:700;font-size:16px;margin-bottom:8px;}
+    .re-card p{color:var(--slate);font-size:13.5px;line-height:1.6;}
+    .re-item-list{display:flex;flex-direction:column;gap:8px;margin-top:10px;}
+    .re-item{display:flex;align-items:flex-start;gap:8px;font-size:13px;color:#475569;}
+
+    .plan-box{border:2px solid var(--gold);border-radius:12px;overflow:hidden;}
+    .plan-head{background:var(--gold);padding:14px 24px;}
+    .plan-head h3{font-family:'Montserrat',sans-serif;font-weight:800;font-size:17px;color:var(--navy);}
+    .plan-body{padding:20px 24px;background:white;}
+    .plan-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #f1f5f9;}
+    .plan-row:last-of-type{border-bottom:none;}
+    .plan-lbl{color:var(--slate);font-size:14px;}
+    .plan-val{font-family:'Montserrat',sans-serif;font-weight:700;font-size:15px;color:var(--navy);}
+    .plan-val.gold{color:var(--gold);}
+    .plan-note{font-size:11.5px;color:#94a3b8;margin-top:12px;line-height:1.6;}
+
+    .guarantee-strip{background:var(--navy);border-radius:12px;padding:32px 36px;display:flex;align-items:flex-start;gap:20px;}
+    .guarantee-strip-icon{width:48px;height:48px;background:rgba(212,175,55,.15);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+    .guarantee-strip h3{color:var(--gold);font-family:'Montserrat',sans-serif;font-weight:800;font-size:17px;margin-bottom:8px;}
+    .guarantee-strip p{color:#94a3b8;font-size:14px;line-height:1.65;}
+
+    .process-steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:0;margin-top:40px;}
+    .ps{padding:32px 24px;background:white;border-right:1px solid #f1f5f9;position:relative;}
+    .ps:last-child{border-right:none;}
+    .ps-num{font-family:'Montserrat',sans-serif;font-weight:900;font-size:40px;color:rgba(212,175,55,.15);line-height:1;margin-bottom:12px;}
+    .ps h4{font-family:'Montserrat',sans-serif;font-weight:700;font-size:16px;margin-bottom:8px;}
+    .ps p{color:var(--slate);font-size:13.5px;line-height:1.6;}
+
+    /* ── RESPONSIVE ── */
+    @media(max-width:900px){
+      .pillar-inner{grid-template-columns:1fr;gap:32px;}
+      .pillar-inner.rev{direction:ltr;}
+    }
+    @media(max-width:768px){
+      .nb-links{display:none;}
+      .burger{display:block;}
+      .form-row{grid-template-columns:1fr;}
+      .hero-cta{flex-direction:column;align-items:center;}
+      .guarantee-strip{flex-direction:column;}
+      .process-steps{grid-template-columns:1fr 1fr;}
+      .ps{border-right:none;border-bottom:1px solid #f1f5f9;}
+    }
+    @media(max-width:480px){
+      .process-steps{grid-template-columns:1fr;}
+      .kaps-grid{grid-template-columns:1fr;}
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════ NAVBAR ══════════════════════ -->
+<nav id="navbar">
+  <div class="nb-inner">
+    <div onclick="showPage('home');goTo('top')" style="cursor:pointer;">
+      <div class="nb-logo-name">LUKÁŠ DAVID</div>
+      <div class="nb-logo-sub">Finanční poradce</div>
+    </div>
+    <div class="nb-links">
+      <button class="nb-link" onclick="showPage('home');goTo('top')">Domů</button>
+      <button class="nb-link" onclick="showPage('home');goTo('#pillar-fp')">Finanční plánování</button>
+      <button class="nb-link" onclick="showPage('home');goTo('#pillar-poj')">Pojištění</button>
+      <button class="nb-link" onclick="showPage('home');goTo('#pillar-inv')">Investice</button>
+      <button class="nb-link" onclick="showPage('home');goTo('#pillar-hyp')">Hypotéky</button>
+      <button class="nb-link" onclick="showPage('re')">Správa nemovitostí</button>
+      <button class="nb-link nb-cta btn-gold" onclick="showPage('home');goTo('#contact')">Konzultace zdarma</button>
+    </div>
+    <button class="burger" id="burger" onclick="toggleMenu()" aria-label="Menu">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+  </div>
+  <div class="mob-menu" id="mob-menu">
+    <button class="mob-link" onclick="showPage('home');goTo('top');closeMenu()">Domů</button>
+    <button class="mob-link" onclick="showPage('home');goTo('#pillar-fp');closeMenu()">Finanční plánování</button>
+    <button class="mob-link" onclick="showPage('home');goTo('#pillar-poj');closeMenu()">Pojištění</button>
+    <button class="mob-link" onclick="showPage('home');goTo('#pillar-inv');closeMenu()">Investice</button>
+    <button class="mob-link" onclick="showPage('home');goTo('#pillar-hyp');closeMenu()">Hypotéky</button>
+    <button class="mob-link" onclick="showPage('re');closeMenu()">Správa nemovitostí</button>
+    <button class="btn-gold" style="margin-top:14px;width:100%;justify-content:center;" onclick="showPage('home');goTo('#contact');closeMenu()">Konzultace zdarma</button>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════════════════════════════
+     PAGE: HOME
+══════════════════════════════════════════════════════════ -->
+<div class="page active" id="page-home">
+
+  <!-- ── HERO ── -->
+  <div id="top"></div>
+  <section class="hero">
+    <div class="hero-deco" style="top:-70px;right:-70px;width:340px;height:340px;border:1px solid rgba(212,175,55,.1);"></div>
+    <div class="hero-deco" style="bottom:-90px;left:-90px;width:400px;height:400px;border:1px solid rgba(212,175,55,.07);"></div>
+    <div style="max-width:720px;margin:0 auto;position:relative;z-index:1;" class="fi">
+      <div class="hero-badge">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="#d4af37" stroke="#d4af37" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        <span>Nezávislý finanční poradce · Praha</span>
+      </div>
+      <h1>Stavím vaše finance<br><em>na pevných základech</em></h1>
+      <p class="hero-sub">Od neprůstřelného pojištění po cestu k vlastnímu bydlení. Individuální strategie, objektivní srovnání celého trhu a nadstandardní péče o váš majetek – pod jednou střechou.</p>
+      <div class="hero-cta">
+        <button class="btn-gold" onclick="goTo('#contact')">Nezávazná konzultace <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
+        <button class="btn-outline" onclick="goTo('#tiles')">Prozkoumat služby</button>
+      </div>
+      <div class="hero-stats">
+        <div style="text-align:center;"><div class="hero-stat-val">Celý trh</div><div class="hero-stat-lbl">bank a pojišťoven</div></div>
+        <div style="text-align:center;"><div class="hero-stat-val">100%</div><div class="hero-stat-lbl">objektivní srovnání</div></div>
+        <div style="text-align:center;"><div class="hero-stat-val">ČNB</div><div class="hero-stat-lbl">registrace</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── TILES / ROZCESTNÍK ── -->
+  <section class="sec" id="tiles">
+    <div class="wrap">
+      <div class="fi" style="text-align:center;">
+        <p class="sh-label">Co pro vás dělám</p>
+        <h2 class="sh-title">S čím vám pomůžu</h2>
+        <div class="gdiv"><div class="gdiv-l"></div><div class="gdiv-d"></div><div class="gdiv-l"></div></div>
+        <p class="sh-sub">Klikněte na oblast a přečtěte si více – nebo rovnou rezervujte první bezplatnou konzultaci.</p>
+      </div>
+      <div class="tiles-grid">
+        <div class="tile fi fi-d1" onclick="goTo('#pillar-fp')">
+          <div class="tile-icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          </div>
+          <h3>Finanční plánování</h3>
+          <p>Analýza vaší situace, definování cílů a plán cesty k finanční rentě a nezávislosti.</p>
+          <div class="tile-arrow">Zjistit více <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+        </div>
+        <div class="tile fi fi-d2" onclick="goTo('#pillar-poj')">
+          <div class="tile-icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <h3>Pojištění</h3>
+          <p>Ochrana příjmu, rodiny a majetku. Bezplatný audit stávajících smluv.</p>
+          <div class="tile-arrow">Zjistit více <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+        </div>
+        <div class="tile fi fi-d3" onclick="goTo('#pillar-inv')">
+          <div class="tile-icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+          </div>
+          <h3>Investice</h3>
+          <p>Budování bohatství, ochrana před inflací a tvorba renty pro klidnou budoucnost.</p>
+          <div class="tile-arrow">Zjistit více <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+        </div>
+        <div class="tile fi fi-d4" onclick="goTo('#pillar-hyp')">
+          <div class="tile-icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          </div>
+          <h3>Úvěry a hypotéky</h3>
+          <p>Financování bydlení s přehledem celého trhu. Vše vyřídím za vás, administrativně na klíč.</p>
+          <div class="tile-arrow">Zjistit více <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PILLAR 1: FINANČNÍ PLÁNOVÁNÍ ── -->
+  <section class="pillar sec-alt" id="pillar-fp">
+    <div class="pillar-inner wrap">
+      <div class="pillar-content fi">
+        <div class="pillar-tag"><svg width="12" height="12" viewBox="0 0 24 24" fill="#d4af37"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><span>Pilíř 1</span></div>
+        <h2>Finanční plánování</h2>
+        <p>Finanční plán není jen tabulka čísel – je to váš osobní průvodce životem. Začínáme komplexní analýzou vaší současné situace: příjmy, výdaje, závazky i cíle. Teprve na základě těchto dat sestavíme plán, který dává smysl právě vám.</p>
+        <div class="highlight-box"><p>Pravidelná revize plánu je samozřejmostí. Váš plán aktualizujeme při každé zásadní životní změně – ať už jde o nové zaměstnání, dítě, nebo změnu bydliště.</p></div>
+        <ul class="pillar-list">
+          <li class="pillar-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Komplexní analýza finanční situace</li>
+          <li class="pillar-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Definování krátkodobých i dlouhodobých cílů</li>
+          <li class="pillar-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Plán cesty k finanční rentě a nezávislosti</li>
+          <li class="pillar-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Pravidelné revize a aktualizace plánu</li>
+        </ul>
+        <button class="btn-gold" onclick="goTo('#contact')">Chci finanční plán <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
+      </div>
+      <div class="fi fi-d1">
+        <div class="pillar-visual">
+          <div class="pillar-visual-deco" style="top:-30px;right:-30px;width:180px;height:180px;background:rgba(212,175,55,.06);border-radius:50%;"></div>
+          <p style="color:var(--gold);font-family:'Montserrat',sans-serif;font-weight:700;font-size:11px;letter-spacing:2px;text-transform:uppercase;margin-bottom:20px;">Váš plán krok za krokem</p>
+          <div style="display:flex;flex-direction:column;gap:16px;">
+            <div style="background:rgba(255,255,255,.06);border-radius:8px;padding:16px 18px;border-left:3px solid var(--gold);">
+              <div style="color:white;font-family:'Montserrat',sans-serif;font-weight:700;font-size:14px;margin-bottom:4px;">1. Kde jsem teď?</div>
+              <div style="color:#94a3b8;font-size:13px;line-height:1.5;">Příjmy, výdaje, závazky, majetek – realistický přehled.</div>
+            </div>
+            <div style="background:rgba(255,255,255,.06);border-radius:8px;padding:16px 18px;border-left:3px solid var(--gold);">
+              <div style="color:white;font-family:'Montserrat',sans-serif;font-weight:700;font-size:14px;margin-bottom:4px;">2. Kam chci dojít?</div>
+              <div style="color:#94a3b8;font-size:13px;line-height:1.5;">Vlastní bydlení, finanční renta, vzdělání dětí...</div>
+            </div>
+            <div style="background:rgba(255,255,255,.06);border-radius:8px;padding:16px 18px;border-left:3px solid var(--gold);">
+              <div style="color:white;font-family:'Montserrat',sans-serif;font-weight:700;font-size:14px;margin-bottom:4px;">3. Jak se tam dostanu?</div>
+              <div style="color:#94a3b8;font-size:13px;line-height:1.5;">Konkrétní kroky, produkty a časový plán.</div>
+            </div>
+            <div style="background:rgba(255,255,255,.06);border-radius:8px;padding:16px 18px;border-left:3px solid var(--gold);">
+              <div style="color:white;font-family:'Montserrat',sans-serif;font-weight:700;font-size:14px;margin-bottom:4px;">4. Zůstávám na správné cestě?</div>
+              <div style="color:#94a3b8;font-size:13px;line-height:1.5;">Pravidelné revize a úpravy plánu podle reality.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PILLAR 2: POJIŠTĚNÍ ── -->
+  <section class="pillar" id="pillar-poj">
+    <div class="pillar-inner pillar-inner rev wrap">
+      <div class="pillar-content fi">
+        <div class="pillar-tag"><svg width="12" height="12" viewBox="0 0 24 24" fill="#d4af37"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><span>Pilíř 2</span></div>
+        <h2>Pojištění</h2>
+        <p>Správné pojištění není náklad – je to záchranná síť, která chrání vše, co jste vybudovali. Pojistit se špatně je stejně nebezpečné jako nepojistit se vůbec: buď platíte za zbytečná krytí, nebo vám v klíčové chvíli pojišťovna odmítne plnit.</p>
+        <div class="highlight-box"><p><strong>Bezplatný audit smluv:</strong> Přineste mi stávající pojistné smlouvy. Provedu detailní analýzu – zjistím mezery v krytí, duplicity i zbytečné přeplatky. Revize je zcela zdarma a nezávazná.</p></div>
+        <ul class="pillar-list">
+          <li class="pillar-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Ochrana příjmu při invaliditě a vážné nemoci</li>
+          <li class="pillar-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Životní a úrazové pojištění pro celou rodinu</li>
+          <li class="pillar-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Pojištění majetku, domácnosti a vozidel</li>
+          <li class="pillar-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Srovnání desítek pojišťoven na trhu</li>
+          <li class="pillar-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Bezplatný audit stávajících smluv</li>
+        </ul>
+        <button class="btn-gold" onclick="goTo('#contact')">Chci bezplatný audit <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
+      </div>
+      <div class="fi fi-d1">
+        <div class="pillar-visual">
+          <div class="pillar-visual-deco" style="bottom:-20px;left:-20px;width:160px;height:160px;background:rgba(212,175,55,.06);border-radius:50%;"></div>
+          <p style="color:var(--gold);font-family:'Montserrat',sans-serif;font-weight:700;font-size:11px;letter-spacing:2px;text-transform:uppercase;margin-bottom:20px;">Co auditujeme</p>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+            <div style="background:rgba(255,255,255,.06);border-radius:8px;padding:14px;text-align:center;">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:8px;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              <div style="color:white;font-size:13px;font-weight:600;font-family:'Montserrat',sans-serif;">Životní</div>
+            </div>
+            <div style="background:rgba(255,255,255,.06);border-radius:8px;padding:14px;text-align:center;">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:8px;"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+              <div style="color:white;font-size:13px;font-weight:600;font-family:'Montserrat',sans-serif;">Majetek</div>
+            </div>
+            <div style="background:rgba(255,255,255,.06);border-radius:8px;padding:14px;text-align:center;">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:8px;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              <div style="color:white;font-size:13px;font-weight:600;font-family:'Montserrat',sans-serif;">Úraz</div>
+            </div>
+            <div style="background:rgba(255,255,255,.06);border-radius:8px;padding:14px;text-align:center;">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:8px;"><rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+              <div style="color:white;font-size:13px;font-weight:600;font-family:'Montserrat',sans-serif;">Vozidlo</div>
+            </div>
+          </div>
+          <div style="margin-top:18px;background:rgba(212,175,55,.1);border-radius:8px;padding:14px 16px;">
+            <p style="color:var(--gold);font-size:13px;font-family:'Montserrat',sans-serif;font-weight:700;text-align:center;">Audit smluv ZDARMA a NEZÁVAZNĚ</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PILLAR 3: INVESTICE ── -->
+  <section class="pillar sec-alt" id="pillar-inv">
+    <div class="pillar-inner wrap">
+      <div class="pillar-content fi">
+        <div class="pillar-tag"><svg width="12" height="12" viewBox="0 0 24 24" fill="#d4af37"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><span>Pilíř 3</span></div>
+        <h2>Investice</h2>
+        <p>Peníze na účtu každý rok reálně ztrácejí hodnotu vlivem inflace. Investování není spekulace – je to zodpovědný přístup k budoucnosti, kdy vaše úspory pracují za vás. Klíčem je správná diverzifikace: nerozkládat vejce do jednoho košíku.</p>
+        <div class="highlight-box"><p><strong>Diverzifikace portfolio:</strong> Kombinujeme akcie pro růst, dluhopisy pro stabilitu a nemovitostní fondy pro příjem. Konkrétní mix závisí na vašem horizontu, cílech a toleranci rizika.</p></div>
+        <ul class="pillar-list">
+          <li class="pillar-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Ochrana úspor před inflací</li>
+          <li class="pillar-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Akcie, dluhopisy a nemovitostní fondy</li>
+          <li class="pillar-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Spoření pro děti a vzdělání</li>
+          <li class="pillar-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Budování dlouhodobé renty</li>
+          <li class="pillar-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Investiční strategie na míru vašemu profilu</li>
+        </ul>
+        <button class="btn-gold" onclick="goTo('#contact')">Chci investovat <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
+      </div>
+      <div class="fi fi-d1">
+        <div class="pillar-visual">
+          <p style="color:var(--gold);font-family:'Montserrat',sans-serif;font-weight:700;font-size:11px;letter-spacing:2px;text-transform:uppercase;margin-bottom:20px;">Diverzifikace portfolia</p>
+          <div style="display:flex;flex-direction:column;gap:14px;">
+            <div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span style="color:#94a3b8;font-size:13px;">Akcie (růst)</span><span style="color:var(--gold);font-size:13px;font-weight:700;">~40–60 %</span></div>
+              <div style="height:6px;background:rgba(255,255,255,.08);border-radius:3px;"><div style="height:100%;background:var(--gold);border-radius:3px;width:50%;"></div></div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span style="color:#94a3b8;font-size:13px;">Dluhopisy (stabilita)</span><span style="color:var(--gold);font-size:13px;font-weight:700;">~20–35 %</span></div>
+              <div style="height:6px;background:rgba(255,255,255,.08);border-radius:3px;"><div style="height:100%;background:var(--gold-light);border-radius:3px;width:28%;opacity:.75;"></div></div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span style="color:#94a3b8;font-size:13px;">Reality (příjem)</span><span style="color:var(--gold);font-size:13px;font-weight:700;">~15–25 %</span></div>
+              <div style="height:6px;background:rgba(255,255,255,.08);border-radius:3px;"><div style="height:100%;background:var(--gold-light);border-radius:3px;width:20%;opacity:.5;"></div></div>
+            </div>
+          </div>
+          <div style="margin-top:24px;border-top:1px solid rgba(255,255,255,.08);padding-top:18px;">
+            <p style="color:#64748b;font-size:12px;line-height:1.6;">* Konkrétní alokace závisí na investičním horizontu, cílech a toleranci rizika každého klienta.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PILLAR 4: HYPOTÉKY ── -->
+  <section class="pillar" id="pillar-hyp">
+    <div class="pillar-inner pillar-inner rev wrap">
+      <div class="pillar-content fi">
+        <div class="pillar-tag"><svg width="12" height="12" viewBox="0 0 24 24" fill="#d4af37"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><span>Pilíř 4</span></div>
+        <h2>Úvěry a&nbsp;hypotéky</h2>
+        <p>Hypotéka je jedním z největších finančních rozhodnutí vašeho života. Banka vám nabídne svůj produkt – já porovnám celý trh a najdu nejlepší podmínky pro vás. A co víc: celou administrativu vyřídím za vás.</p>
+        <div class="highlight-box"><p><strong>Na klíč:</strong> Vy mi sdělíte svou situaci a přání, já vše ostatní zařídím – od průzkumu trhu přes podání žádosti až po podpis smlouvy. Vy se staráte jen o stěhování.</p></div>
+        <ul class="pillar-list">
+          <li class="pillar-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Srovnání hypoték a úvěrů celého trhu</li>
+          <li class="pillar-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Veškerá administrativa a komunikace s bankou</li>
+          <li class="pillar-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Příprava žádosti a zastupování klienta</li>
+          <li class="pillar-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Refinancování stávajících úvěrů</li>
+          <li class="pillar-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Americké hypotéky a spotřebitelské úvěry</li>
+        </ul>
+        <button class="btn-gold" onclick="goTo('#contact')">Chci hypotéku na klíč <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
+      </div>
+      <div class="fi fi-d1">
+        <div class="pillar-visual">
+          <div class="pillar-visual-deco" style="top:-20px;right:-20px;width:150px;height:150px;background:rgba(212,175,55,.06);border-radius:50%;"></div>
+          <p style="color:var(--gold);font-family:'Montserrat',sans-serif;font-weight:700;font-size:11px;letter-spacing:2px;text-transform:uppercase;margin-bottom:20px;">Jak to funguje</p>
+          <div style="display:flex;flex-direction:column;gap:14px;position:relative;">
+            <div style="position:absolute;left:19px;top:36px;bottom:36px;width:2px;background:rgba(212,175,55,.2);"></div>
+            <div style="display:flex;gap:14px;align-items:flex-start;">
+              <div style="width:40px;height:40px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;z-index:1;"><span style="color:var(--navy);font-family:'Montserrat',sans-serif;font-weight:800;font-size:14px;">1</span></div>
+              <div><div style="color:white;font-weight:700;font-size:13px;font-family:'Montserrat',sans-serif;margin-bottom:3px;">Sdělte mi situaci</div><div style="color:#64748b;font-size:12px;line-height:1.5;">Příjmy, nemovitost, výše úvěru, horizont.</div></div>
+            </div>
+            <div style="display:flex;gap:14px;align-items:flex-start;">
+              <div style="width:40px;height:40px;background:rgba(212,175,55,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;z-index:1;"><span style="color:var(--gold);font-family:'Montserrat',sans-serif;font-weight:800;font-size:14px;">2</span></div>
+              <div><div style="color:white;font-weight:700;font-size:13px;font-family:'Montserrat',sans-serif;margin-bottom:3px;">Porovnám celý trh</div><div style="color:#64748b;font-size:12px;line-height:1.5;">Prohledám nabídky desítek bank za vás.</div></div>
+            </div>
+            <div style="display:flex;gap:14px;align-items:flex-start;">
+              <div style="width:40px;height:40px;background:rgba(212,175,55,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;z-index:1;"><span style="color:var(--gold);font-family:'Montserrat',sans-serif;font-weight:800;font-size:14px;">3</span></div>
+              <div><div style="color:white;font-weight:700;font-size:13px;font-family:'Montserrat',sans-serif;margin-bottom:3px;">Vyřídím administrativu</div><div style="color:#64748b;font-size:12px;line-height:1.5;">Žádost, doklady, komunikace – vše za vás.</div></div>
+            </div>
+            <div style="display:flex;gap:14px;align-items:flex-start;">
+              <div style="width:40px;height:40px;background:rgba(212,175,55,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;z-index:1;"><span style="color:var(--gold);font-family:'Montserrat',sans-serif;font-weight:800;font-size:14px;">4</span></div>
+              <div><div style="color:white;font-weight:700;font-size:13px;font-family:'Montserrat',sans-serif;margin-bottom:3px;">Podpis a čerpání</div><div style="color:#64748b;font-size:12px;line-height:1.5;">Vy podepisujete, já jsem u toho s vámi.</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── KAPS PROCES ── -->
+  <section class="sec sec-alt" id="kaps">
+    <div class="wrap">
+      <div class="fi" style="text-align:center;">
+        <p class="sh-label">Jak spolupracujeme</p>
+        <h2 class="sh-title">Proces spolupráce KAPS</h2>
+        <div class="gdiv"><div class="gdiv-l"></div><div class="gdiv-d"></div><div class="gdiv-l"></div></div>
+        <p class="sh-sub">Čtyři jasné kroky od první schůzky po dlouhodobý servis. Vždy víte, kde jsme a co bude dál.</p>
+      </div>
+      <div class="kaps-grid fi" style="margin-top:48px;">
+        <div class="kaps-step">
+          <div class="kaps-letter">K</div>
+          <div class="kaps-num">Krok 1 · Konzultace</div>
+          <div class="kaps-icon-wrap"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+          <h3>Konzultace</h3>
+          <p>Úvodní setkání, kde bez závazků zjistím vaše potřeby, přání a finanční situaci. Kladete otázky, já naslouchám.</p>
+        </div>
+        <div class="kaps-step">
+          <div class="kaps-letter">A</div>
+          <div class="kaps-num">Krok 2 · Analýza</div>
+          <div class="kaps-icon-wrap"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+          <h3>Analýza</h3>
+          <p>Podrobný průzkum trhu, rozbor stávajících smluv a produktů. Hledám mezery, duplicity a úspory.</p>
+        </div>
+        <div class="kaps-step">
+          <div class="kaps-letter">P</div>
+          <div class="kaps-num">Krok 3 · Poradenství</div>
+          <div class="kaps-icon-wrap"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+          <h3>Poradenství</h3>
+          <p>Představení konkrétního řešení a finančního plánu na míru. Vysvětlím každý krok a zodpovím všechny otázky.</p>
+        </div>
+        <div class="kaps-step">
+          <div class="kaps-letter">S</div>
+          <div class="kaps-num">Krok 4 · Servis</div>
+          <div class="kaps-icon-wrap"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+          <h3>Servis</h3>
+          <p>Dlouhodobá péče a pravidelné aktualizace plánu. Jsem tu při každé životní změně – vždy po vašem boku.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FAQ ── -->
+  <section class="sec" id="faq">
+    <div class="wrap-sm">
+      <div class="fi" style="text-align:center;">
+        <p class="sh-label">Dotazy</p>
+        <h2 class="sh-title">Časté otázky</h2>
+        <div class="gdiv"><div class="gdiv-l"></div><div class="gdiv-d"></div><div class="gdiv-l"></div></div>
+      </div>
+      <div style="margin-top:40px;" class="fi">
+        <div class="acc-item" id="a0"><button class="acc-btn" onclick="toggleAcc('a0')"><span>Kolik stojí vaše finanční poradenství?</span><svg class="acc-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button><div class="acc-body" id="ab0"><div class="acc-inner"><p>Finanční poradenství poskytuji zcela bezplatně. Jsem odměňován provizemi od finančních institucí, ale tato skutečnost nijak neovlivňuje mé doporučení – porovnávám celý trh a vždy doporučuji nejlepší řešení pro vás.</p></div></div></div>
+        <div class="acc-item" id="a1"><button class="acc-btn" onclick="toggleAcc('a1')"><span>Proč se obrátit na vás místo přímo na banku?</span><svg class="acc-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button><div class="acc-body" id="ab1"><div class="acc-inner"><p>Banka nabízí pouze vlastní produkty. Já jako nezávislý poradce porovnávám desítky bank a pojišťoven a vyberu to, co skutečně odpovídá vašim potřebám – bez skrytých zájmů.</p></div></div></div>
+        <div class="acc-item" id="a2"><button class="acc-btn" onclick="toggleAcc('a2')"><span>Jak funguje bezplatná revize stávajících smluv?</span><svg class="acc-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button><div class="acc-body" id="ab2"><div class="acc-inner"><p>Přineste mi stávající pojistné smlouvy a já provedu detailní analýzu – zda máte dostatečné krytí, zda neplatíte zbytečně a zda nejsou lepší alternativy. Vše bezplatně a nezávazně.</p></div></div></div>
+        <div class="acc-item" id="a3"><button class="acc-btn" onclick="toggleAcc('a3')"><span>Pomůžete mi i při změně životní situace?</span><svg class="acc-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button><div class="acc-body" id="ab3"><div class="acc-inner"><p>Absolutně. Jsem váš dlouhodobý partner, ne jednorázový zprostředkovatel. Při rozvodu, narození dítěte, novém zaměstnání nebo ztrátě příjmu vaše smlouvy revidujeme a aktualizujeme.</p></div></div></div>
+        <div class="acc-item" id="a4"><button class="acc-btn" onclick="toggleAcc('a4')"><span>Mohu vás kontaktovat i pro správu nemovitosti?</span><svg class="acc-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button><div class="acc-body" id="ab4"><div class="acc-inner"><p>Ano – vedle finančního poradenství nabízím také komplexní správu pronajímaných nemovitostí v Praze. Více informací najdete na <button onclick="showPage('re');closeMenu()" style="background:none;border:none;color:var(--gold);cursor:pointer;font-weight:700;font-size:14px;padding:0;font-family:inherit;">stránce správy nemovitostí</button>.</p></div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CONTACT ── -->
+  <section class="sec sec-alt" id="contact">
+    <div class="wrap-md">
+      <div class="fi" style="text-align:center;">
+        <p class="sh-label">Spojme se</p>
+        <h2 class="sh-title">Kontakt</h2>
+        <div class="gdiv"><div class="gdiv-l"></div><div class="gdiv-d"></div><div class="gdiv-l"></div></div>
+        <p class="sh-sub">Napište mi – první konzultace je vždy bezplatná a nezávazná.</p>
+      </div>
+      <div class="contact-grid fi">
+        <div>
+          <h3 style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:20px;margin-bottom:26px;">Lukáš David</h3>
+          <div style="display:flex;flex-direction:column;gap:16px;margin-bottom:32px;">
+            <div class="contact-item"><div class="c-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.99 12 19.79 19.79 0 0 1 2 3.18 2 2 0 0 1 4 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div><div><div class="c-lbl">Telefon</div><div class="c-val">+420 XXX XXX XXX</div></div></div>
+            <div class="contact-item"><div class="c-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><div><div class="c-lbl">E-mail</div><div class="c-val">lukas.david@gfsgroup.cz</div></div></div>
+            <div class="contact-item"><div class="c-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div><div><div class="c-lbl">Oblast působení</div><div class="c-val">Praha a okolí</div></div></div>
+          </div>
+          <div style="background:white;border-radius:8px;padding:20px;border-left:4px solid var(--gold);box-shadow:0 2px 12px rgba(30,41,59,.06);">
+            <p style="font-size:13px;color:#64748b;line-height:1.65;">Registrovaný u České národní banky (ČNB). První konzultace vždy bezplatně a nezávazně.</p>
+          </div>
+          <div style="margin-top:20px;background:white;border-radius:8px;padding:20px;box-shadow:0 2px 12px rgba(30,41,59,.06);">
+            <p style="font-size:13px;color:#64748b;margin-bottom:12px;">Zajímá vás také správa nemovitostí?</p>
+            <button class="btn-navy" onclick="showPage('re')" style="font-size:13px;padding:10px 18px;">Správa nemovitostí <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
+          </div>
+        </div>
+        <div>
+          <div id="submitted-msg"><svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:16px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg><h3 style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:22px;margin-bottom:10px;">Zpráva odeslána!</h3><p style="color:#64748b;font-size:15px;">Ozvu se vám co nejdříve, zpravidla do 24 hodin.</p></div>
+          <form id="contact-form" onsubmit="handleSubmit(event)">
+            <div class="form-row"><div><label class="form-label">Jméno *</label><input required placeholder="Jan Novák"/></div><div><label class="form-label">Telefon</label><input placeholder="+420 777 888 999"/></div></div>
+            <div class="form-group"><label class="form-label">E-mail *</label><input required type="email" placeholder="jan@novak.cz"/></div>
+            <div class="form-group"><label class="form-label">Zpráva</label><textarea rows="4" placeholder="Popište, s čím vám mohu pomoci..." style="resize:vertical;"></textarea></div>
+            <button type="submit" class="btn-gold" style="width:100%;justify-content:center;">Odeslat zprávu <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
+            <p style="font-size:12px;color:#94a3b8;text-align:center;margin-top:12px;">Vaše údaje jsou v bezpečí a nebudou sdíleny třetím stranám.</p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /page-home -->
+
+
+<!-- ══════════════════════════════════════════════════════════
+     PAGE: SPRÁVA NEMOVITOSTÍ
+══════════════════════════════════════════════════════════ -->
+<div class="page" id="page-re">
+
+  <!-- HERO -->
+  <section class="re-hero">
+    <div style="position:absolute;top:-50px;right:-50px;width:280px;height:280px;border-radius:50%;border:1px solid rgba(212,175,55,.1);pointer-events:none;"></div>
+    <div style="position:absolute;bottom:-70px;left:-70px;width:320px;height:320px;border-radius:50%;border:1px solid rgba(212,175,55,.07);pointer-events:none;"></div>
+    <div style="max-width:700px;margin:0 auto;position:relative;z-index:1;" class="fi">
+      <div class="hero-badge" style="margin-bottom:22px;">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="#d4af37" stroke="#d4af37" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        <span>Správa nemovitostí · Praha</span>
+      </div>
+      <h1>Vy máte klid,<br><em>já zodpovědnost.</em></h1>
+      <p>Kompletní správa pronajímaných bytů v Praze – od vyhledání nájemníků až po měsíční výplatu nájmu. Jeden člověk, jedna smlouva, žádné starosti.</p>
+      <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
+        <button class="btn-gold" onclick="goTo('#re-contact')">Chci spravovat svůj byt <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
+        <button class="btn-outline" onclick="goTo('#re-services')">Co zahrnuje správa</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- PŘEHLED SLUŽEB -->
+  <section class="sec sec-alt" id="re-services">
+    <div class="wrap">
+      <div class="fi" style="text-align:center;">
+        <p class="sh-label">Kompletní servis</p>
+        <h2 class="sh-title">Co zahrnuje správa nemovitosti</h2>
+        <div class="gdiv"><div class="gdiv-l"></div><div class="gdiv-d"></div><div class="gdiv-l"></div></div>
+        <p class="sh-sub">Postaráme se o vše – vy jen čekáte na měsíční výplatu nájmu.</p>
+      </div>
+      <div class="re-services-grid fi">
+
+        <div class="re-card">
+          <div class="re-card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+          <h3>Vyhledání nájemníků</h3>
+          <p>Profesionální inzerce na Sreality, Bezrealitky a dalších portálech. Výběr z nejlepších zájemců.</p>
+          <div class="re-item-list">
+            <div class="re-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Profesionální fotografie bytu</div>
+            <div class="re-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Inzerce na Sreality, Bezrealitky aj.</div>
+            <div class="re-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Prohlídky a výběr zájemců</div>
+          </div>
+        </div>
+
+        <div class="re-card">
+          <div class="re-card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+          <h3>Prověření nájemníků</h3>
+          <p>Prověříme každého zájemce v registrech dlužníků a exekucí, než podepíšeme smlouvu.</p>
+          <div class="re-item-list">
+            <div class="re-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Kontrola exekucí a insolvence</div>
+            <div class="re-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Ověření příjmů a zaměstnání</div>
+            <div class="re-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Reference od předchozích pronajímatelů</div>
+          </div>
+        </div>
+
+        <div class="re-card">
+          <div class="re-card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+          <h3>Smluvní dokumentace</h3>
+          <p>Kompletní smluvní zajištění předání bytu – právně správně a bez mezer.</p>
+          <div class="re-item-list">
+            <div class="re-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Příprava nájemní smlouvy</div>
+            <div class="re-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Předávací protokol a přepis měřidel</div>
+            <div class="re-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Kauce a smluvní jistiny</div>
+          </div>
+        </div>
+
+        <div class="re-card">
+          <div class="re-card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg></div>
+          <h3>Inkasování nájemného</h3>
+          <p>Nájemné vybíráme na správcovský účet a po odečtení poplatků vyplácíme majiteli.</p>
+          <div class="re-item-list">
+            <div class="re-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Správcovský účet pro transparentnost</div>
+            <div class="re-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Platby energií a služeb</div>
+            <div class="re-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Výplata majiteli každý měsíc</div>
+          </div>
+        </div>
+
+        <div class="re-card">
+          <div class="re-card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
+          <h3>Technický servis</h3>
+          <p>Koordinace oprav a údržby nemovitosti. Menší opravy řešíme operativně bez nutnosti vašeho zásahu.</p>
+          <div class="re-item-list">
+            <div class="re-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Řešení běžných oprav a poruch</div>
+            <div class="re-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Koordinace řemeslníků a servisních firem</div>
+            <div class="re-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Zpráva o každém zásahu</div>
+          </div>
+        </div>
+
+        <div class="re-card">
+          <div class="re-card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
+          <h3>Kontroly a reporty</h3>
+          <p>Fyzické kontroly bytu dvakrát ročně. Měsíční reporty v PDF s přehledem všech plateb a aktivit.</p>
+          <div class="re-item-list">
+            <div class="re-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>2× ročně fyzická kontrola stavu</div>
+            <div class="re-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Měsíční report v PDF</div>
+            <div class="re-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Online přehled plateb 24/7</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- GARANCE & CENA -->
+  <section class="sec" id="re-pricing">
+    <div class="wrap-md">
+      <div class="fi" style="text-align:center;">
+        <p class="sh-label">Garance a transparentnost</p>
+        <h2 class="sh-title">Cenový model a záruky</h2>
+        <div class="gdiv"><div class="gdiv-l"></div><div class="gdiv-d"></div><div class="gdiv-l"></div></div>
+        <p class="sh-sub">Žádné skryté poplatky. Vydělávám, jen když vydělává váš byt.</p>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:28px;margin-top:48px;" class="fi">
+
+        <div class="plan-box">
+          <div class="plan-head"><h3>Plán Základní</h3></div>
+          <div class="plan-body">
+            <div class="plan-row"><span class="plan-lbl">Váš podíl z nájmu</span><span class="plan-val">91 %</span></div>
+            <div class="plan-row"><span class="plan-lbl">Garance při neplatičích</span><span class="plan-val gold">60 % *</span></div>
+            <div class="plan-row"><span class="plan-lbl">Platba při neobsazenosti</span><span class="plan-val">1 Kč</span></div>
+            <p class="plan-note">* K vyplacení dojde po úspěšném vymožení dlužné částky od nájemníka.</p>
+            <button class="btn-gold" onclick="goTo('#re-contact')" style="width:100%;justify-content:center;margin-top:18px;">Mám zájem <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:16px;">
+          <div class="guarantee-strip">
+            <div class="guarantee-strip-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+            <div><h3>Garance výplaty nájmu</h3><p>Nájemné vyplácím majiteli vždy – i v případě, že nájemník neplatí. Díky systému garance máte jistotu pravidelného příjmu každý měsíc.</p></div>
+          </div>
+          <div style="background:var(--bg);border-radius:12px;padding:24px 28px;border:1.5px solid #e2e8f0;">
+            <h3 style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:16px;margin-bottom:12px;">Transparentní reporting</h3>
+            <div style="display:flex;flex-direction:column;gap:10px;">
+              <div style="display:flex;align-items:center;gap:10px;font-size:14px;color:#475569;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Měsíční report v PDF e-mailem</div>
+              <div style="display:flex;align-items:center;gap:10px;font-size:14px;color:#475569;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Online přehled plateb v reálném čase</div>
+              <div style="display:flex;align-items:center;gap:10px;font-size:14px;color:#475569;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Zpráva z každé fyzické kontroly bytu</div>
+              <div style="display:flex;align-items:center;gap:10px;font-size:14px;color:#475569;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Doklady ke všem opravám a platbám</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCES SPRÁVY -->
+  <section class="sec sec-alt">
+    <div class="wrap">
+      <div class="fi" style="text-align:center;">
+        <p class="sh-label">Jak to funguje</p>
+        <h2 class="sh-title">Proces předání nemovitosti</h2>
+        <div class="gdiv"><div class="gdiv-l"></div><div class="gdiv-d"></div><div class="gdiv-l"></div></div>
+      </div>
+      <div class="process-steps fi" style="margin-top:40px;border-radius:12px;overflow:hidden;box-shadow:0 4px 24px rgba(30,41,59,.08);">
+        <div class="ps"><div class="ps-num">01</div><h4>Bezplatná konzultace</h4><p>Sejdeme se, prohlédneme byt a probereme vaše očekávání. Bez závazků, bez poplatků.</p></div>
+        <div class="ps"><div class="ps-num">02</div><h4>Podpis smlouvy</h4><p>Sjednáme podmínky správy, podepíšeme smlouvu a já přebírám zodpovědnost za nemovitost.</p></div>
+        <div class="ps"><div class="ps-num">03</div><h4>Vyhledání nájemníka</h4><p>Spustím inzerci, provedu prohlídky a vyberu prověřeného nájemníka. Vy schvalujete výběr.</p></div>
+        <div class="ps"><div class="ps-num">04</div><h4>Průběžná správa</h4><p>Inkasování nájmu, řešení oprav, kontroly a měsíční reporty. Vy dostáváte peníze každý měsíc.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RE CONTACT -->
+  <section class="sec" id="re-contact">
+    <div class="wrap-md">
+      <div class="fi" style="text-align:center;">
+        <p class="sh-label">Nezávazná poptávka</p>
+        <h2 class="sh-title">Chci spravovat svůj byt</h2>
+        <div class="gdiv"><div class="gdiv-l"></div><div class="gdiv-d"></div><div class="gdiv-l"></div></div>
+        <p class="sh-sub">Napište mi – ozveme se do 24 hodin a domluvíme bezplatnou konzultaci.</p>
+      </div>
+      <div class="contact-grid fi">
+        <div>
+          <h3 style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:20px;margin-bottom:24px;">Lukáš David</h3>
+          <div style="display:flex;flex-direction:column;gap:16px;margin-bottom:28px;">
+            <div class="contact-item"><div class="c-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.99 12 19.79 19.79 0 0 1 2 3.18 2 2 0 0 1 4 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div><div><div class="c-lbl">Telefon</div><div class="c-val">+420 XXX XXX XXX</div></div></div>
+            <div class="contact-item"><div class="c-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><div><div class="c-lbl">E-mail</div><div class="c-val">lukas.david@gfsgroup.cz</div></div></div>
+            <div class="contact-item"><div class="c-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div><div><div class="c-lbl">Oblast působení</div><div class="c-val">Praha a Středočeský kraj</div></div></div>
+          </div>
+          <div style="background:var(--bg);border-radius:8px;padding:18px 20px;border-left:4px solid var(--gold);">
+            <p style="font-size:13px;color:#64748b;line-height:1.65;">Registrovaný u České národní banky (ČNB). Správa nemovitostí je bezplatná konzultace – bez závazků.</p>
+          </div>
+          <div style="margin-top:16px;">
+            <button class="btn-navy" onclick="showPage('home')" style="font-size:13px;padding:10px 18px;">← Zpět na finanční poradenství</button>
+          </div>
+        </div>
+        <div>
+          <div id="re-submitted-msg" style="display:none;text-align:center;padding:36px 20px;">
+            <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:16px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            <h3 style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:22px;margin-bottom:10px;">Zpráva odeslána!</h3>
+            <p style="color:#64748b;font-size:15px;">Ozvu se vám co nejdříve, zpravidla do 24 hodin.</p>
+          </div>
+          <form id="re-contact-form" onsubmit="handleRESubmit(event)">
+            <div class="form-row"><div><label class="form-label">Jméno *</label><input required placeholder="Jan Novák"/></div><div><label class="form-label">Telefon</label><input placeholder="+420 777 888 999"/></div></div>
+            <div class="form-group"><label class="form-label">E-mail *</label><input required type="email" placeholder="jan@novak.cz"/></div>
+            <div class="form-group"><label class="form-label">Adresa nemovitosti</label><input placeholder="Praha 5, Anděl – 2+kk, 58 m²"/></div>
+            <div class="form-group"><label class="form-label">Zpráva</label><textarea rows="3" placeholder="Sdělte mi více o nemovitosti nebo vašich požadavcích..." style="resize:vertical;"></textarea></div>
+            <button type="submit" class="btn-gold" style="width:100%;justify-content:center;">Odeslat poptávku <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
+            <p style="font-size:12px;color:#94a3b8;text-align:center;margin-top:12px;">Vaše údaje jsou v bezpečí a nebudou sdíleny třetím stranám.</p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /page-re -->
+
+
+<!-- ══════════════════════ FOOTER ══════════════════════ -->
+<footer>
+  <div style="max-width:1100px;margin:0 auto;">
+    <div class="ft-name">LUKÁŠ DAVID</div>
+    <div class="ft-sub">Finanční poradce registrovaný u ČNB · Praha</div>
+    <div class="ft-links">
+      <button class="ft-link" onclick="showPage('home');goTo('top')">Domů</button>
+      <button class="ft-link" onclick="showPage('home');goTo('#pillar-fp')">Finanční plánování</button>
+      <button class="ft-link" onclick="showPage('home');goTo('#pillar-poj')">Pojištění</button>
+      <button class="ft-link" onclick="showPage('home');goTo('#pillar-inv')">Investice</button>
+      <button class="ft-link" onclick="showPage('home');goTo('#pillar-hyp')">Hypotéky</button>
+      <button class="ft-link" onclick="showPage('re')">Správa nemovitostí</button>
+      <button class="ft-link" onclick="showPage('home');goTo('#contact')">Kontakt</button>
+    </div>
+    <div class="ft-copy">© <span id="yr"></span> Lukáš David. Všechna práva vyhrazena.</div>
+  </div>
+</footer>
+
+
+<script>
+  // ── YEAR
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  // ── SCROLL
+  function goTo(id) {
+    if (id === 'top') { window.scrollTo({top:0, behavior:'smooth'}); return; }
+    var el = document.querySelector(id);
+    if (el) { setTimeout(function(){ el.scrollIntoView({behavior:'smooth', block:'start'}); }, 60); }
+  }
+
+  // ── PAGES
+  function showPage(name) {
+    document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
+    document.getElementById('page-' + name).classList.add('active');
+    window.scrollTo({top:0, behavior:'smooth'});
+    initFadeIns();
+  }
+
+  // ── MOBILE MENU
+  var menuOpen = false;
+  function toggleMenu() {
+    menuOpen = !menuOpen;
+    document.getElementById('mob-menu').classList.toggle('open', menuOpen);
+    document.getElementById('burger').innerHTML = menuOpen
+      ? '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>'
+      : '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>';
+  }
+  function closeMenu() { menuOpen = false; document.getElementById('mob-menu').classList.remove('open'); document.getElementById('burger').innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>'; }
+
+  // ── ACCORDION
+  var openAcc = null;
+  function toggleAcc(id) {
+    var item = document.getElementById(id);
+    var bodyId = 'a' + id.slice(1); // e.g. a0 -> ab0
+    var body = document.getElementById('b' + id.slice(1));
+    // find body: acc-item has class acc-body inside
+    var bodies = item.querySelectorAll('.acc-body');
+    var chevrons = item.querySelectorAll('.acc-chev');
+    var isOpen = item.classList.contains('open');
+    if (openAcc && openAcc !== id) {
+      var prev = document.getElementById(openAcc);
+      if (prev) {
+        prev.classList.remove('open');
+        prev.querySelectorAll('.acc-body').forEach(function(b){ b.classList.remove('open'); });
+        prev.querySelectorAll('.acc-chev').forEach(function(c){ c.style.transform='rotate(0deg)'; });
+      }
+    }
+    item.classList.toggle('open', !isOpen);
+    bodies.forEach(function(b){ b.classList.toggle('open', !isOpen); });
+    chevrons.forEach(function(c){ c.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(180deg)'; });
+    openAcc = isOpen ? null : id;
+  }
+
+  // ── FORM SUBMIT
+  function handleSubmit(e) {
+    e.preventDefault();
+    document.getElementById('contact-form').classList.add('hide');
+    document.getElementById('submitted-msg').classList.add('show');
+  }
+  function handleRESubmit(e) {
+    e.preventDefault();
+    document.getElementById('re-contact-form').style.display = 'none';
+    document.getElementById('re-submitted-msg').style.display = 'block';
+  }
+
+  // ── FADE-IN
+  function initFadeIns() {
+    var els = document.querySelectorAll('.page.active .fi:not(.v)');
+    if (!('IntersectionObserver' in window)) {
+      els.forEach(function(el){ el.classList.add('v'); }); return;
+    }
+    var obs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) { entry.target.classList.add('v'); obs.unobserve(entry.target); }
+      });
+    }, {threshold: 0.08});
+    els.forEach(function(el){ obs.observe(el); });
+  }
+
+  // Init on load
+  initFadeIns();
+</script>
+</body>
+</html>
